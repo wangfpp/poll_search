@@ -2,42 +2,43 @@
 
 import threading
 from server import Search
+import queue
 
 class Poll(object):
     def __init__(self, poll_num = 2):
         self.poll_num = poll_num
         self.threadingList = []
-        self.taskList = []
-        self.lock = threading.Lock()
-        self.cond = threading.Condition(self.lock)
+        self._queue = queue.Queue()
+        self._stop = False
         self.runPoll()
     
     def runPoll(self):
-        worker = threading.Thread(target=self.run)
-        self.threadingList.append(worker)
-        worker.start()
+        for i in range(self.poll_num):
+            worker = threading.Thread(target=self.run)
+            self.threadingList.append(worker)
+            worker.start()
     
     def run(self):
         print( '活跃的个数:{}'.format(threading.activeCount()))
-        while True:
-            with self.lock:
-                while not self.taskList:
-                    self.cond.wait()
-                newTask = self.taskList.pop(0)
+        while not self._stop:
+            while not self._queue.empty():
+                newTask = self._queue.get()
                 url = newTask.url
                 index = newTask.index
-            newTask.searchTxt(url, index)
+                newTask.searchTxt(url, index)
+                self._queue.task_done()
 
     def add_task(self, task):
-        self.lock.acquire()
-        self.taskList.append(task)
-        self.cond.notify()
-        self.lock.release()
+        self._queue.put(task)
+
     def close(self):
-        pass
+       self._queue.join()
+       self._stop = True
+       for i in self.threadingList:
+           i.join()
 
 if __name__ == "__main__":
-    poll = Poll(2)
+    poll = Poll(8)
     task_c = Search()
     task = task_c.searchFn()
     length = len(task)

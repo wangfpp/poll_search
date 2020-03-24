@@ -16,7 +16,7 @@ class Search:
     def searchFn(self):
         session = HTMLSession()
         r  = session.get(self.baseUrl, timeout = 10)
-        navBar = r.html.find('ul.nav.clearfix>li>a[href]')
+        navBar = r.html.find('div.spec.clearfix>dl>dd>a[href]')
         url_list = []
         length = len(navBar)
         for index in range(1, length):
@@ -27,7 +27,7 @@ class Search:
 
     def searchTxt(self, url, index):
         print('task {}     start'.format(index))
-        time.sleep(random.random() * index)
+        time.sleep(random.random())
         print('task {}     end'.format(index))
 
 
