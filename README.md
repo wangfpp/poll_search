@@ -17,10 +17,11 @@ python3 poll.py
 ```
 
 ### 目录结构
-.
+```
 ├── poll.py　#线程管理
 ├── README.md # 说明文件
 ├── requirements.txt #依赖项
 ├── server.py #爬虫主函数
+```
 
 
