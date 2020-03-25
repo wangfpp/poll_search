@@ -34,8 +34,6 @@ class Poll(object):
     def close(self):
        self._queue.join()
        self._stop = True
-       for i in self.threadingList:
-           i.join()
 
 if __name__ == "__main__":
     poll = Poll(8)
