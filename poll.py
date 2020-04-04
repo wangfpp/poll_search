@@ -41,9 +41,8 @@ if __name__ == "__main__":
     task = task_c.searchFn()
     length = len(task)
     for index in range(0, length):
-        task_real = Search()
         task_url = task[index]
-        task_real.url = task_url
-        task_real.index = index
-        poll.add_task(task_real)
+        task_c.url = task_url
+        task_c.index = index
+        poll.add_task(task_c)
     poll.close()

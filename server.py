@@ -2,7 +2,7 @@
 # @Author: wangfpp
 # @Date:   2020-03-26 11:20:32
 # @Last Modified by:   wangfpp
-# @Last Modified time: 2020-04-04 17:29:16
+# @Last Modified time: 2020-04-04 18:10:08
 ## coding: utf-8
 
 from requests_html import HTMLSession, HTMLResponse
@@ -74,6 +74,7 @@ class Search:
         return folderPath
     def folderIsExit(self, path):
         '''判断目录是否存在'''
+        print(os.path.exists(path))
         return os.path.exists(path)
 
     def searchMainUrl(self, url, pathUrl):
@@ -85,7 +86,7 @@ class Search:
         for a_tag in html_node_list:
             title, href = self.fetchTitlandHref(a_tag)
             self.searchText(href, title, pathUrl)
-            
+
     def searchText(self, url, title, path_url):
         '''
             寻找文章的主函数喽
@@ -109,43 +110,6 @@ class Search:
             f.write(txt)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    result = Search()
-    print(result.searchFn())
+# if __name__ == "__main__":
+#     result = Search()
+#     print(result.searchFn())
