@@ -40,7 +40,6 @@ if __name__ == "__main__":
     task_c = Search()
     task = task_c.searchFn()
     length = len(task)
-    print(length)
     for index in range(0, length):
         task_real = Search()
         task_url = task[index]
