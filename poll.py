@@ -25,7 +25,7 @@ class Poll(object):
                 newTask = self._queue.get()
                 url = newTask.url
                 index = newTask.index
-                newTask.searchTxt(url, index)
+                newTask.searchHref(url, index)
                 self._queue.task_done()
 
     def add_task(self, task):
